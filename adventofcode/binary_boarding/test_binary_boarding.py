@@ -29,7 +29,7 @@ def test_find_seat_id():
     assert unique_seat_id == 357
 
 
-def test_find_seat_id_acceptance_test_one():
+def test_find_seat_id_boarding_pass_one():
     boarding_pass = "BFFFBBFRRR"
     row = find_row(boarding_pass, NUMBER_OF_ROWS)
     column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
@@ -38,7 +38,7 @@ def test_find_seat_id_acceptance_test_one():
     assert unique_seat_id == 567
 
 
-def test_find_seat_id_acceptance_test_two():
+def test_find_seat_id_boarding_pass_two():
     boarding_pass = "FFFBBBFRRR"
     row = find_row(boarding_pass, NUMBER_OF_ROWS)
     column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
@@ -47,7 +47,7 @@ def test_find_seat_id_acceptance_test_two():
     assert unique_seat_id == 119
 
 
-def test_find_seat_id_acceptance_test_three():
+def test_find_seat_id_boarding_pass_three():
     boarding_pass = "BBFFBBFRLL"
     row = find_row(boarding_pass, NUMBER_OF_ROWS)
     column = find_column(boarding_pass, NUMBER_OF_COLUMNS)

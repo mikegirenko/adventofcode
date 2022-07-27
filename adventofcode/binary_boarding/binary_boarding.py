@@ -14,12 +14,12 @@ def read_puzzle_input() -> List[str]:
 
 def find_row(one_row_from_puzzle, all_rows_on_the_plane) -> int:
     first_seven_characters = one_row_from_puzzle[0:7]
-    list_of_all_rows_on_the_plane = [int(x) for x in range(all_rows_on_the_plane + 1)] # make it a list
+    list_of_all_rows_on_the_plane = [int(x) for x in range(all_rows_on_the_plane + 1)]  # make it a list
 
     first_range = 0
-    if first_seven_characters[0] == "F": # 0 to 63
+    if first_seven_characters[0] == "F":  # 0 to 63
         first_range = list_of_all_rows_on_the_plane[0:int(len(list_of_all_rows_on_the_plane) / 2)]
-    if first_seven_characters[0] == "B": # 64 to 127
+    if first_seven_characters[0] == "B":  # 64 to 127
         first_range = list_of_all_rows_on_the_plane[int(len(list_of_all_rows_on_the_plane) / 2):
                                                     len(list_of_all_rows_on_the_plane) + 1]
 
@@ -59,7 +59,7 @@ def find_row(one_row_from_puzzle, all_rows_on_the_plane) -> int:
     if first_seven_characters[6] == "B":
         seventh_range = sixth_range[int(len(sixth_range) / 2):len(sixth_range) + 1]
 
-    row = seventh_range[0] # make it an int
+    row = seventh_range[0]  # make it an int
 
     return row
 
@@ -69,15 +69,15 @@ def find_column(one_row_from_puzzle, all_columns_in_a_row) -> int:
     list_of_columns = [int(x) for x in range(all_columns_in_a_row + 1)]
 
     first_column = 0
-    if last_three_characters[0] == "R": # 4 to 7
+    if last_three_characters[0] == "R":  # 4 to 7
         first_column = list_of_columns[int(len(list_of_columns) / 2): len(list_of_columns)]
-    if last_three_characters[0] == "L": # 0 to 3
+    if last_three_characters[0] == "L":  # 0 to 3
         first_column = list_of_columns[0:int(len(list_of_columns) / 2)]
 
     second_column = 0
-    if last_three_characters[1] == "R": # 4 to 5
+    if last_three_characters[1] == "R":  # 4 to 5
         second_column = first_column[int(len(first_column) / 2): len(first_column)]
-    if last_three_characters[1] == "L": # 6 to 7
+    if last_three_characters[1] == "L":  # 6 to 7
         second_column = first_column[0:int(len(first_column) / 2)]
 
     third_column = 0
@@ -120,12 +120,12 @@ def find_my_seat():
         row = find_row(each_pass, NUMBER_OF_ROWS)
         column = find_column(each_pass, NUMBER_OF_COLUMNS)
         seat_id = find_seat_id(row, column)
-        all_ids.append(seat_id)
+        all_ids.append(seat_id)  # create list of all id's
     lowest_id = min(all_ids) # 11
     highest_id = max(all_ids) # 850
-    missing_ids = list(set(range(max(all_ids) + 1)) - set(all_ids))
+    missing_ids = list(set(range(max(all_ids) + 1)) - set(all_ids))  # found it online and it works, using set
     for missing_id in missing_ids:
-        if lowest_id < missing_id < highest_id:
+        if lowest_id < missing_id < highest_id:  # my seat should be above lowest if and below highest
             my_seat = missing_id
 
     return my_seat
