@@ -56,12 +56,14 @@ def test_find_seat_id_acceptance_test_three():
     assert unique_seat_id == 820
 
 
+# What is the highest seat ID on a boarding pass?
 def test_find_highest_seat_id_on_boarding_pass():
     highest_seat_id_on_boarding_pass = find_highest_seat_id_on_boarding_pass()
 
     assert highest_seat_id_on_boarding_pass == 850
 
 
+# What is the ID of your seat?
 def test_find_my_seat():
     my_seat = find_my_seat()
 
