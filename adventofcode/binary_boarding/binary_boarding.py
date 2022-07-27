@@ -7,22 +7,21 @@ NUMBER_OF_COLUMNS = 7
 def read_puzzle_input() -> List[str]:
     with open("puzzle_input.txt", "r") as file:
         read_data = file.read()
-    list_of_passwords = read_data.split("\n")
+    list_boarding_passes = read_data.split("\n")
 
-    return list_of_passwords
+    return list_boarding_passes
 
 
-def find_row(row_from_input, all_rows) -> int:
-    whole_row = row_from_input
-    whole_range_of_rows = all_rows
-    first_seven_characters = whole_row[0:7]
-    list_of_rows = [int(x) for x in range(whole_range_of_rows + 1)] # make it a list
+def find_row(one_row_from_puzzle, all_rows_on_the_plane) -> int:
+    first_seven_characters = one_row_from_puzzle[0:7]
+    list_of_all_rows_on_the_plane = [int(x) for x in range(all_rows_on_the_plane + 1)] # make it a list
 
     first_range = 0
     if first_seven_characters[0] == "F": # 0 to 63
-        first_range = list_of_rows[0:int(len(list_of_rows) / 2)]
+        first_range = list_of_all_rows_on_the_plane[0:int(len(list_of_all_rows_on_the_plane) / 2)]
     if first_seven_characters[0] == "B": # 64 to 127
-        first_range = list_of_rows[int(len(list_of_rows) / 2):len(list_of_rows) + 1]
+        first_range = list_of_all_rows_on_the_plane[int(len(list_of_all_rows_on_the_plane) / 2):
+                                                    len(list_of_all_rows_on_the_plane) + 1]
 
     second_range = 0
     if first_seven_characters[1] == "F":  # 0 to 31 -OR- 64 to 95
@@ -65,11 +64,9 @@ def find_row(row_from_input, all_rows) -> int:
     return row
 
 
-def find_column(row_from_input, all_columns) -> int:
-    whole_row = row_from_input
-    whole_range_of_columns = all_columns
-    last_three_characters = whole_row[-3:]
-    list_of_columns = [int(x) for x in range(whole_range_of_columns + 1)]
+def find_column(one_row_from_puzzle, all_columns_in_a_row) -> int:
+    last_three_characters = one_row_from_puzzle[-3:]
+    list_of_columns = [int(x) for x in range(all_columns_in_a_row + 1)]
 
     first_column = 0
     if last_three_characters[0] == "R": # 4 to 7
@@ -100,15 +97,10 @@ def find_seat_id(row, column) -> int:
     return unique_seat_id
 
 
-def find_highest_seat_id(ids_input) -> int:
-    highest_seat_id = max(ids_input)
-
-    return highest_seat_id
-
-
 def find_highest_seat_id_on_boarding_pass() -> int:
     all_passes = read_puzzle_input()
     all_ids = []
+
     for each_pass in all_passes:
         row = find_row(each_pass, NUMBER_OF_ROWS)
         column = find_column(each_pass, NUMBER_OF_COLUMNS)
@@ -123,6 +115,7 @@ def find_my_seat():
     all_passes = read_puzzle_input()
     all_ids = []
     my_seat = 0
+
     for each_pass in all_passes:
         row = find_row(each_pass, NUMBER_OF_ROWS)
         column = find_column(each_pass, NUMBER_OF_COLUMNS)
