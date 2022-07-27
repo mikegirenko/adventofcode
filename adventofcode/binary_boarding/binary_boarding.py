@@ -12,18 +12,17 @@ def read_puzzle_input() -> List[str]:
     return list_of_passwords
 
 
-def find_row(row_from_input):
-    whole_range_of_rows = 127
-    low_range = 0
-    high_range = 0
+def find_row(row_from_input, all_rows) -> int:
     whole_row = row_from_input
+    whole_range_of_rows = all_rows
     first_seven_characters = whole_row[0:7]
-    list_if_rows = [int(x) for x in range(whole_range_of_rows + 1)]
+    list_of_rows = [int(x) for x in range(whole_range_of_rows + 1)] # make it a list
+
     first_range = 0
     if first_seven_characters[0] == "F": # 0 to 63
-        first_range = list_if_rows[0:int(len(list_if_rows) / 2)]
+        first_range = list_of_rows[0:int(len(list_of_rows) / 2)]
     if first_seven_characters[0] == "B": # 64 to 127
-        first_range = list_if_rows[int(len(list_if_rows) / 2):len(list_if_rows) + 1]
+        first_range = list_of_rows[int(len(list_of_rows) / 2):len(list_of_rows) + 1]
 
     second_range = 0
     if first_seven_characters[1] == "F":  # 0 to 31 -OR- 64 to 95
@@ -61,45 +60,36 @@ def find_row(row_from_input):
     if first_seven_characters[6] == "B":
         seventh_range = sixth_range[int(len(sixth_range) / 2):len(sixth_range) + 1]
 
-    return seventh_range
+    row = seventh_range[0] # make it an int
+
+    return row
 
 
-    # first_range = slice(len(list_if_rows) // 2, len(list_if_rows)) # list_if_rows[64:128]
+def find_column(row_from_input, all_columns):
+    whole_row = row_from_input
+    whole_range_of_columns = all_columns
+    last_three_characters = whole_row[-3:]
+    list_of_columns = [int(x) for x in range(whole_range_of_columns + 1)]
 
-    # s = "string"
-    # a = len(s)
-    # s1 = slice(0, len(s) // 2)
-    # s2 = slice(len(s) // 2, len(s))
-    # print(s[s1], s[s2])
-
-    # if first_seven_characters[0] == "F": # then 0 to 63
-    #     second_range = list_if_rows[0:64]
-    # if first_seven_characters[0] == "B": # then 64 to 127
-    #     first_range = list_if_rows[64:128]
-
-    #
-    # if first_seven_characters[0] == "F": # then 0 to 63
-    #     low_range = low_range
-    #     high_range = int(whole_range_of_rows / 2)
-    #
-    # if first_seven_characters[0] == "B": # then 64 to 127
-    #     low_range = whole_range_of_rows - int(whole_range_of_rows / 2)
-    #     high_range = whole_range_of_rows
-    #
-    # if first_seven_characters[1] == "F": # 0 to 31
-    #     low_range = int(low_range / 2)
-    #     high_range = int(high_range / 2)
-    # if first_seven_characters[1] == "B": # 32 tp 63
-    #     low_range = high_range - int(high_range / 2)
-    #     high_range = high_range
-    #
-    # if first_seven_characters[2] == "F":  # 0 to 15
-    #     low_range = int(low_range / 2)
-    #     high_range = int(high_range / 2)
-    # if first_seven_characters[2] == "B":
-    #     low_range = high_range - int(high_range / 2)
-    #     high_range = high_range
-
-    # return low_range, high_range
+    first_column = 0
+    if last_three_characters[0] == "R": # 4 to 7
+        first_column = list_of_columns[int(len(list_of_columns) / 2): len(list_of_columns)]
+    if last_three_characters[0] == "L": # 0 to 3
+        first_column = list_of_columns[0:int(len(list_of_columns) / 2)]
 
 
+    # second_column = 0
+    if last_three_characters[1] == "R": # 4 to 5
+        second_column = first_column[int(len(first_column) / 2): len(first_column)]
+    if last_three_characters[1] == "L": # 6 to 7
+        second_column = first_column[0:int(len(first_column) / 2)]
+
+    # third_column = 0
+    if last_three_characters[2] == "R":
+        third_column = second_column[int(len(second_column) / 2): len(second_column)]
+    if last_three_characters[2] == "L":
+        third_column = second_column[0:int(len(second_column) / 2)]
+
+    column = third_column[0]
+
+    return column
