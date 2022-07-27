@@ -3,34 +3,73 @@ from adventofcode.binary_boarding.binary_boarding import *
 
 def test_puzzle_input():
     puzzle_input = read_puzzle_input()
+    print(puzzle_input)
     assert puzzle_input
 
 
 def test_find_row():
-    number_of_rows = 127
-    boarding_pass = "FBFBBFFRLR"
-    row = find_row(boarding_pass, number_of_rows)
+    boarding_pass = "FBFBBFFRLR" # FBFBBFF
+    row = find_row(boarding_pass, NUMBER_OF_ROWS)
+
     assert row == 44
 
 
 def test_find_column():
-    number_of_columns = 7
     boarding_pass = "FBFBBFFRLR" # RLR
-    column = find_column(boarding_pass, number_of_columns)
+    column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
+
     assert column == 5
 
 
-"""
-The last three characters will be either L or R; these specify exactly one of the 
-8 columns of seats on the plane (numbered 0 through 7). The same process as above 
-proceeds again, this time with only three steps. L means to keep the lower half, 
-while R means to keep the upper half.
+def test_find_seat_id():
+    row = 44
+    column = 5
+    unique_seat_id = find_seat_id(row, column)
 
-For example, consider just the last 3 characters of FBFBBFFRLR:
-Start by considering the whole range, columns 0 through 7.
-R means to take the upper half, keeping columns 4 through 7. x
-L means to take the lower half, keeping columns 4 through 5. 
-The final R keeps the upper of the two, column 5.
+    assert unique_seat_id == 357
 
-So, decoding FBFBBFFRLR reveals that it is the seat at row 44, column 5.
-"""
+
+def test_find_seat_id_acceptance_test_one():
+    boarding_pass = "BFFFBBFRRR"
+    row = find_row(boarding_pass, NUMBER_OF_ROWS)
+    column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
+    unique_seat_id = find_seat_id(row, column)
+
+    assert unique_seat_id == 567
+
+
+def test_find_seat_id_acceptance_test_two():
+    boarding_pass = "FFFBBBFRRR"
+    row = find_row(boarding_pass, NUMBER_OF_ROWS)
+    column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
+    unique_seat_id = find_seat_id(row, column)
+
+    assert unique_seat_id == 119
+
+
+def test_find_seat_id_acceptance_test_three():
+    boarding_pass = "BBFFBBFRLL"
+    row = find_row(boarding_pass, NUMBER_OF_ROWS)
+    column = find_column(boarding_pass, NUMBER_OF_COLUMNS)
+    unique_seat_id = find_seat_id(row, column)
+
+    assert unique_seat_id == 820
+
+
+def test_find_highest_seat_id():
+    list_of_ids = [1, 6, 0, 9, 77]
+    highest_seat_id = find_highest_seat_id(list_of_ids)
+
+    assert highest_seat_id == max(list_of_ids)
+
+
+def test_find_highest_seat_id_on_boarding_pass():
+    highest_seat_id_on_boarding_pass = find_highest_seat_id_on_boarding_pass()
+
+    assert highest_seat_id_on_boarding_pass == 850
+
+
+def test_find_my_seat():
+    my_seat = find_my_seat()
+
+    assert my_seat == 599

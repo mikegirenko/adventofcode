@@ -1,7 +1,7 @@
 from typing import List
 
-# Requirements
-# find row
+NUMBER_OF_ROWS = 127
+NUMBER_OF_COLUMNS = 7
 
 
 def read_puzzle_input() -> List[str]:
@@ -65,7 +65,7 @@ def find_row(row_from_input, all_rows) -> int:
     return row
 
 
-def find_column(row_from_input, all_columns):
+def find_column(row_from_input, all_columns) -> int:
     whole_row = row_from_input
     whole_range_of_columns = all_columns
     last_three_characters = whole_row[-3:]
@@ -77,14 +77,13 @@ def find_column(row_from_input, all_columns):
     if last_three_characters[0] == "L": # 0 to 3
         first_column = list_of_columns[0:int(len(list_of_columns) / 2)]
 
-
-    # second_column = 0
+    second_column = 0
     if last_three_characters[1] == "R": # 4 to 5
         second_column = first_column[int(len(first_column) / 2): len(first_column)]
     if last_three_characters[1] == "L": # 6 to 7
         second_column = first_column[0:int(len(first_column) / 2)]
 
-    # third_column = 0
+    third_column = 0
     if last_three_characters[2] == "R":
         third_column = second_column[int(len(second_column) / 2): len(second_column)]
     if last_three_characters[2] == "L":
@@ -93,3 +92,47 @@ def find_column(row_from_input, all_columns):
     column = third_column[0]
 
     return column
+
+
+def find_seat_id(row, column) -> int:
+    unique_seat_id = (row * 8) + column
+
+    return unique_seat_id
+
+
+def find_highest_seat_id(ids_input) -> int:
+    highest_seat_id = max(ids_input)
+
+    return highest_seat_id
+
+
+def find_highest_seat_id_on_boarding_pass() -> int:
+    all_passes = read_puzzle_input()
+    all_ids = []
+    for each_pass in all_passes:
+        row = find_row(each_pass, NUMBER_OF_ROWS)
+        column = find_column(each_pass, NUMBER_OF_COLUMNS)
+        seat_id = find_seat_id(row, column)
+        all_ids.append(seat_id)
+    highest_seat_id_on_boarding_pass = max(all_ids)
+
+    return highest_seat_id_on_boarding_pass
+
+
+def find_my_seat():
+    all_passes = read_puzzle_input()
+    all_ids = []
+    my_seat = 0
+    for each_pass in all_passes:
+        row = find_row(each_pass, NUMBER_OF_ROWS)
+        column = find_column(each_pass, NUMBER_OF_COLUMNS)
+        seat_id = find_seat_id(row, column)
+        all_ids.append(seat_id)
+    lowest_id = min(all_ids) # 11
+    highest_id = max(all_ids) # 850
+    missing_ids = list(set(range(max(all_ids) + 1)) - set(all_ids))
+    for missing_id in missing_ids:
+        if lowest_id < missing_id < highest_id:
+            my_seat = missing_id
+
+    return my_seat
