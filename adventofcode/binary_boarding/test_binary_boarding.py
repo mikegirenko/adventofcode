@@ -68,3 +68,5 @@ def test_find_my_seat():
     my_seat = find_my_seat()
 
     assert my_seat == 599
+
+# Both parts of this puzzle are complete! They provide two gold stars: **
