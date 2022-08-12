@@ -1,6 +1,6 @@
 from adventofcode.custom_customs.custom_customs import read_puzzle_input, \
     remove_extras_from_answers, count_number_of_questions_answered_yes_within_group, \
-    calculate_sum_of_counts, INPUT_FILE
+    calculate_sum_of_counts, INPUT_FILE, count_questions_in_a_group_to_which_everyone_answered_yes
 
 
 def test_puzzle_input():
@@ -26,3 +26,12 @@ def test_number_of_questions_answered_yes_and_n_within_group():
 def test_sum_of_counts():
     list_of_groups = ['abc', 'abc', 'abac', 'aaaa', 'b']
     assert calculate_sum_of_counts(list_of_groups) == 11
+
+
+def test_identify_the_questions_in_a_group_to_which_everyone_answered_yes():
+    one_person_group_unique_answers = 'abc'
+    one_person_group_duplicated_answer = 'abca'
+    more_than_one_person_group = 'ab\nac'
+    assert count_questions_in_a_group_to_which_everyone_answered_yes(one_person_group_unique_answers) == 3
+    assert count_questions_in_a_group_to_which_everyone_answered_yes(one_person_group_duplicated_answer) == 3
+    assert count_questions_in_a_group_to_which_everyone_answered_yes(more_than_one_person_group) == 3
