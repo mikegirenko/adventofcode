@@ -1,5 +1,4 @@
 from typing import List
-import re
 
 INPUT_FILE = "puzzle_input.txt"
 
@@ -11,7 +10,8 @@ def read_puzzle_input(puzzle_input) -> List[str]:
 
     return list_of_groups
 
-# this will determine bag colors which can contain shiny gold
+
+# determine bag colors which can contain shiny gold,
 # except a rule which starts with "shiny gold"
 def bag_colors_which_can_contain_shiny_gold_bag(list_of_rules) -> List:
     rules = []
@@ -28,8 +28,8 @@ def bag_colors_which_can_contain_shiny_gold_bag(list_of_rules) -> List:
         bag_colors.append(bag_color_combined)
 
     return bag_colors
-# ['posh beige', 'dotted orange', 'bright green', 'faded violet', 'dark olive',
-# 'shiny orange', 'dark tomato']
+    # ['posh beige', 'dotted orange', 'bright green', 'faded violet', 'dark olive',
+    # 'shiny orange', 'dark tomato']
 
 
 # find each row which has at least one bag color which can contain "shiny gold bag"
