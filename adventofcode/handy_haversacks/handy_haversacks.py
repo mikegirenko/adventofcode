@@ -1,6 +1,7 @@
 from typing import List
 
 INPUT_FILE = "puzzle_input.txt"
+INPUT_FILE_EXAMPLE = "puzzle_input_example.txt"
 
 
 def read_puzzle_input(puzzle_input) -> List[str]:
@@ -32,21 +33,34 @@ def bag_colors_which_can_contain_shiny_gold_bag(list_of_rules) -> List:
     # 'shiny orange', 'dark tomato']
 
 
-# find each row which has at least one bag color which can contain "shiny gold bag"
-def count_rows_on_the_list_which_have_one_bag_color(list_of_rules, bag_colors) -> int:
+def can_contain_shiny_gold_bag_directly(list_of_rules) -> bool:
     rows_counter = 0
     for rule in list_of_rules:
-        for bag_color in bag_colors:
-            if bag_color in rule:
+        if not rule.startswith("shiny gold") and "shiny gold bag" in rule:
+            rows_counter += 1
+
+    return rows_counter
+
+
+def can_contain_shiny_gold_bag_indirectly(list_of_rules, colors):
+    rows_counter = 0
+    for rule in list_of_rules:
+        for color in colors:
+            # need to handle scenario "either of which"
+            if color in rule and "shiny gold bag" not in rule:
                 rows_counter += 1
 
     return rows_counter
 
 
+def count_number_of_bags(direct_bags, indirect_bags):
+    return direct_bags + indirect_bags
+
+
 if __name__ == "__main__":
     list_of_rules_from_input = read_puzzle_input(INPUT_FILE)
     bag_colors = bag_colors_which_can_contain_shiny_gold_bag(list_of_rules_from_input)
-    result = count_rows_on_the_list_which_have_one_bag_color(list_of_rules_from_input, bag_colors)
+    #result = count_rows_on_the_list_which_have_one_bag_color(list_of_rules_from_input, bag_colors)
     print("How many bag colors can eventually contain at least one shiny gold bag?", result)
     # 27
     # That's not the right answer.

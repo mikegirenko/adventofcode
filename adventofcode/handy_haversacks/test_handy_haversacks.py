@@ -1,5 +1,7 @@
 from adventofcode.handy_haversacks.handy_haversacks import read_puzzle_input, INPUT_FILE, \
-    count_rows_on_the_list_which_have_one_bag_color, bag_colors_which_can_contain_shiny_gold_bag
+    bag_colors_which_can_contain_shiny_gold_bag, \
+    INPUT_FILE_EXAMPLE, can_contain_shiny_gold_bag_directly, can_contain_shiny_gold_bag_indirectly, \
+    count_number_of_bags
 
 
 def test_puzzle_input():
@@ -22,8 +24,24 @@ def test_bag_colors_which_can_contain_shiny_gold_bag_with_puzzle_input():
     assert len(bag_colors) == 7  # there are 7 bag colors which can have shiny_gold_bag
 
 
-def test_count_rules():
-    list_of_rules = ["5 posh beige bags", "1 dotted orange bags", "5 posh beige bags"]
-    bag_colors = ["posh beige", "dotted orange"]
-    rows_count = count_rows_on_the_list_which_have_one_bag_color(list_of_rules, bag_colors)
-    assert rows_count == 3
+def test_can_contain_shiny_gold_bag_directly():
+    rule_true = "bright white bags contain 1 shiny gold bag."
+    rule_false = "red bags contain 1 yellow bag."
+    assert can_contain_shiny_gold_bag_directly(rule_true)
+    assert not can_contain_shiny_gold_bag_directly(rule_false)
+
+
+def test_can_contain_shiny_gold_bag_indirectly():
+    rules = read_puzzle_input(INPUT_FILE_EXAMPLE)
+    colors = bag_colors_which_can_contain_shiny_gold_bag(rules)
+    assert can_contain_shiny_gold_bag_indirectly(rules, colors) == 4
+
+
+def test_count_number_of_bags():either of which
+    rules = read_puzzle_input(INPUT_FILE_EXAMPLE)
+    colors = bag_colors_which_can_contain_shiny_gold_bag(rules)
+    direct_bags = can_contain_shiny_gold_bag_directly(rules)
+    indirect_bags = can_contain_shiny_gold_bag_indirectly(rules, colors)
+    assert count_number_of_bags(direct_bags, indirect_bags) == 1
+    # it returns 6
+    # this is because can_contain_shiny_gold_bag_indirectly counts incorrectly
