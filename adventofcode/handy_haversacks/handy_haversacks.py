@@ -45,10 +45,13 @@ def can_contain_shiny_gold_bag_directly(list_of_rules) -> bool:
 def can_contain_shiny_gold_bag_indirectly(list_of_rules, colors):
     rows_counter = 0
     for rule in list_of_rules:
+        already_counted_color = True
         for color in colors:
-            # need to handle scenario "either of which"
             if color in rule and "shiny gold bag" not in rule:
+                if not already_counted_color:
+                    continue
                 rows_counter += 1
+                already_counted_color = False
 
     return rows_counter
 
@@ -60,7 +63,9 @@ def count_number_of_bags(direct_bags, indirect_bags):
 if __name__ == "__main__":
     list_of_rules_from_input = read_puzzle_input(INPUT_FILE)
     bag_colors = bag_colors_which_can_contain_shiny_gold_bag(list_of_rules_from_input)
-    #result = count_rows_on_the_list_which_have_one_bag_color(list_of_rules_from_input, bag_colors)
+    direct_bags = can_contain_shiny_gold_bag_directly(list_of_rules_from_input)
+    indirect_bags = can_contain_shiny_gold_bag_indirectly(list_of_rules_from_input, bag_colors)
+    result = count_number_of_bags(direct_bags, indirect_bags)
     print("How many bag colors can eventually contain at least one shiny gold bag?", result)
     # 27
     # That's not the right answer.

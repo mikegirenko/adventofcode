@@ -34,14 +34,12 @@ def test_can_contain_shiny_gold_bag_directly():
 def test_can_contain_shiny_gold_bag_indirectly():
     rules = read_puzzle_input(INPUT_FILE_EXAMPLE)
     colors = bag_colors_which_can_contain_shiny_gold_bag(rules)
-    assert can_contain_shiny_gold_bag_indirectly(rules, colors) == 4
+    assert can_contain_shiny_gold_bag_indirectly(rules, colors) == 2
 
 
-def test_count_number_of_bags():either of which
+def test_count_number_of_bags():
     rules = read_puzzle_input(INPUT_FILE_EXAMPLE)
     colors = bag_colors_which_can_contain_shiny_gold_bag(rules)
     direct_bags = can_contain_shiny_gold_bag_directly(rules)
     indirect_bags = can_contain_shiny_gold_bag_indirectly(rules, colors)
-    assert count_number_of_bags(direct_bags, indirect_bags) == 1
-    # it returns 6
-    # this is because can_contain_shiny_gold_bag_indirectly counts incorrectly
+    assert count_number_of_bags(direct_bags, indirect_bags) == 4
