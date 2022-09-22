@@ -21,7 +21,7 @@ def read_instruction(instruction) -> tuple:
     return operation, argument_plus_minus, int(argument_number)
 
 
-def update_accumulator(code_to_run, operation, argument_plus_minus, argument_number) -> int:
+def update_accumulator(code_to_run) -> int:
     accumulator = 0
     instruction_index = 0
     instruction_executed_second_time = False
