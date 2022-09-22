@@ -9,3 +9,4 @@
 --- Day 5: Binary Boarding ---
 --- Day 6: Custom Customs ---
 --- Day 7: Handy Haversacks ---
+--- Day 8: Handheld Halting ---
