@@ -14,20 +14,24 @@ def read_puzzle_input(puzzle_input) -> List[str]:
 
 def read_instruction(instruction) -> tuple:
     operation = instruction[:3]
-    argument_raw = instruction[-2:]
-    argument_plus_minus = argument_raw[:1]
-    argument_number = argument_raw[1:]
+    argument_split = instruction.split(" ")
+    argument = argument_split[1]
+    argument_plus_minus = argument[0]
+    argument_number = argument[1:]
 
     return operation, argument_plus_minus, int(argument_number)
 
 
-def update_accumulator(code_to_run) -> int:
+def update_accumulator(code_to_run):
     accumulator = 0
+    accumulator_before_instruction_executed_second_time = 0
     instruction_index = 0
     instruction_executed_second_time = False
+    instruction_being_executed_second_time = ""
     already_executed_instructions = []
+    already_jumped = False
     while instruction_index < len(code_to_run) or instruction_executed_second_time:
-        instruction = code_to_run[instruction_index]  # instruction to read, it can jump
+        instruction = code_to_run[instruction_index]
         operation, _, _ = read_instruction(instruction)
         _, argument_plus_minus, _ = read_instruction(instruction)
         _, _, argument_number = read_instruction(instruction)
@@ -47,20 +51,18 @@ def update_accumulator(code_to_run) -> int:
             if argument_plus_minus == "-":
                 instruction_index = instruction_index - argument_number
             for i in already_executed_instructions:
-                if i == code_to_run[instruction_index]:
+                if i == code_to_run[instruction_index] and already_jumped:
                     instruction_executed_second_time = True
-                    # return # remove return
+                    instruction_being_executed_second_time = code_to_run[instruction_index]
+                    accumulator_before_instruction_executed_second_time = accumulator
+            already_jumped = True
         if instruction_executed_second_time:
-            accumulator = 5
+            return accumulator_before_instruction_executed_second_time, instruction_being_executed_second_time
 
     return accumulator
 
-"""
-jmp +4
-acc +3
-jmp -3
-acc -99
-acc +1
-jmp -4
-acc +6
-"""
+
+if __name__ == "__main__":
+    puzzle_input = read_puzzle_input(INPUT_FILE)
+    accumulator_value, instruction_executed_second_time = update_accumulator(puzzle_input)
+    print("Accumulator value is", accumulator_value, "and instruction executed for the second time is", instruction_executed_second_time)
