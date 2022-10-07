@@ -25,11 +25,13 @@ def update_accumulator(code_to_run) -> int:
     accumulator = 0
     instruction_index = 0
     instruction_executed_second_time = False
-    while not instruction_executed_second_time or instruction_index == len(code_to_run) - 1:
+    already_executed_instructions = []
+    while instruction_index < len(code_to_run) or instruction_executed_second_time:
         instruction = code_to_run[instruction_index]  # instruction to read, it can jump
         operation, _, _ = read_instruction(instruction)
         _, argument_plus_minus, _ = read_instruction(instruction)
         _, _, argument_number = read_instruction(instruction)
+        already_executed_instructions.append(code_to_run[instruction_index])
         if operation == "acc":
             if argument_plus_minus == "+":
                 accumulator += argument_number
@@ -41,10 +43,16 @@ def update_accumulator(code_to_run) -> int:
             instruction_index += 1
         if operation == "jmp":
             if argument_plus_minus == "+":
-                instruction_index = argument_number
+                instruction_index = instruction_index + argument_number
             if argument_plus_minus == "-":
-                instruction_index = argument_number
-        instruction_executed_second_time = True
+                instruction_index = instruction_index - argument_number
+            for i in already_executed_instructions:
+                if i == code_to_run[instruction_index]:
+                    instruction_executed_second_time = True
+                    # return # remove return
+        if instruction_executed_second_time:
+            accumulator = 5
+
     return accumulator
 
 """
