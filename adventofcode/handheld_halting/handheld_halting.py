@@ -22,7 +22,7 @@ def read_instruction(instruction) -> tuple:
     return operation, argument_plus_minus, int(argument_number)
 
 
-def update_accumulator(code_to_run):
+def run_code(code_to_run) -> tuple:
     accumulator = 0
     accumulator_before_instruction_executed_second_time = 0
     instruction_index = 0
@@ -64,5 +64,5 @@ def update_accumulator(code_to_run):
 
 if __name__ == "__main__":
     puzzle_input = read_puzzle_input(INPUT_FILE)
-    accumulator_value, instruction_executed_second_time = update_accumulator(puzzle_input)
+    accumulator_value, instruction_executed_second_time = run_code(puzzle_input)
     print("Accumulator value is", accumulator_value, "and instruction executed for the second time is", instruction_executed_second_time)
